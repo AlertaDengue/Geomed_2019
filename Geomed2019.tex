@@ -20,7 +20,7 @@
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
 \usepackage{wrapfig} % Allows wrapping text around tables and figures
-\usepackage[labelformat=empty]{caption}
+% \usepackage[labelformat=empty]{caption}
 \usepackage{fontawesome}
 \usepackage[utf8]{inputenc}
 
@@ -51,13 +51,14 @@
 \authorAffil{1}{Fundação Getulio Vargas, Brazil}; 
 \large \textbf{Correspondence to: fccoelho@fgv.br}}
 \begin{center}
-    \large \textbf{Poster DOI: 10.6084/m9.figshare.7963556 \\ \faGithub \ github.com/AlertaDengue | \faTwitter \ @fccoelho}
+    \large \textbf{Poster DOI: ADD here from figshare \\ \faGithub \ 
+github.com/AlertaDengue | \faTwitter \ @fccoelho}
 \end{center}
 \end{minipage}
 %
 \begin{minipage}[b]{0.25\linewidth}
 \begin{center}
-\includegraphics[width=10cm]{RH_picture3.png}\\ 
+\includegraphics[width=15cm]{figures/Marca_FGV_EMAp.png}\\ 
 \includegraphics[width=16cm]{figures/geomed.png}\\
 \end{center}
 \end{minipage}
@@ -74,49 +75,78 @@
 
 \noindent
 The Mosquito Aedes aegypti is a vector for multiple viruses around the globe. Its distribution is restricted to tropical and subtropical climates, which reflects its sensitivity to temperature, humidity and other weather constraints. The modulation of its life cicle by climate, shapes the seasonality of the diseases it transmits.
- In Brazil, Aedes aegypti has been mainly associated with the transmission of dengue, making it a marked seasonal disease. In recent years, A. aegypti has also been notably responsible for epidemics of the Zika and Chikungunya virus. In this paper we explore the performance of dengue forecast models trained on the longer available incidence timeseries to predict the weekly incidence of Zika and Chikungunya as well.  We will use a LSTM (long short term memory) recursive neural network model, which we have shown, in a previous work, to yield accurate forecasts for weekly dengue incidence. Climate variables such as temperature, humidity, and atmospheric pressure are also used as predictors. A spatial component built from the incidence at neighboring cities is also included. We present results of the forecast of total incidence of arboviral disease as well as of each disease separately and discuss the relative performances of the model for each of these tasks.
-
-
+ In Brazil, Aedes aegypti has been mainly associated with the transmission of 
+dengue, making it a marked seasonal disease. In recent years, A. aegypti has 
+also been notably responsible for epidemics of the Zika and Chikungunya virus. 
+In this paper we explore the performance of dengue forecast models trained on 
+the longer available incidence timeseries to predict the weekly incidence of 
+Zika and Chikungunya as well.  We will use a LSTM (long short term memory) 
+recursive neural network model, which we have shown, in a previous work, to 
+yield accurate forecasts for weekly dengue incidence. We will also compare it 
+to a Random Quantile Forest model. Climate variables such as temperature, 
+humidity, and atmospheric pressure are also used as predictors. A spatial 
+component built from the incidence at neighboring cities is also included. We 
+present results of the forecast of total incidence of arboviral disease as well 
+as of each disease separately and discuss the relative performances of the model 
+for each of these tasks.
 
 \begin{center}\vspace{1cm}
-\includegraphics[width=0.8\linewidth]{FigureMain_v4.png}
-%\captionof{figure}{\textbf{NanoJ framework.} Currently NanoJ consists of 5 modules dedicated to super-resolution imaging and analysis.}
+\includegraphics[width=\linewidth]{figures/dcz_series.png}
+\captionof{figure}{\textbf{Weekly incidence for the state of Ceará, Brazil.} 
+The three arboviroses incidences are correlated.}
+\label{fig:series}
 \end{center}%\vspace{1cm}
 
+The data used in this work comes from the Infodengue project, which monitors 
+these arboviroses in Brazil. In the figure \ref{fig:series} we can see the 
+incidence series for states in Brazil which had significant outbreaks of the 3 
+arboviroses since 2016 when Chikungunya and Zika arrived in Brazil.
 %----------------------------------------------------------------------------------------
 %	NanoJ-Core: Drift Correction
 %----------------------------------------------------------------------------------------
-\section*{NanoJ-Core: Drift Correction}
+\section*{Three diseases, one vector.}
 
 \noindent
-Drift estimation is achieved by directly analysing a raw sequence of timepoints. Frames can then be directly translated to correct drift or a table with drift coordinates can be generated and used in other algorithms (e.g. SRRF).
+Given their similar transmission mechanisms, these diseases present similar 
+seasonal patterns. Being seasonal diseases with serious consequences, being 
+able to forecast their incidence is very important for public health 
+authorities. Among these, Dengue is the one with the longest historic records. 
+Therefore its worth investigating how usefull our knowledge about dengue 
+dynamics is to predict other arboviroses, in this case Zika and Chikungunya. 
+Here we will revisit a forecast model developed by the authors for dengue, and 
+evaluate its performance in predicting the other two arboviroses.
 
-\begin{center}\vspace{1cm}
-    \includegraphics[width=0.8\linewidth]{FigureDrift_v2.png}
-    \captionof{figure}{\textbf{Drift correction with NanoJ-Core.} \textbf{a)} Composite image of two frames from a time-lapse dataset of the same field-of-view. \textbf{b)} Cross-correlation map (CCM) between the two frames shown in a). The vector position of the maximum indicates the linear shift between the two frames. \textbf{c)} Overlay of the two frames after drift correction using NanoJ-Core. \textbf{d)} Vertical and horizontal drift curves obtained using NanoJ-Core from the 100-frame raw data.}
-    \label{fig:DriftCorrection}
-\end{center}%\vspace{1cm}
+
+
 
 %----------------------------------------------------------------------------------------
 %	NanoJ-Core: Channel registration
 %----------------------------------------------------------------------------------------
-\section*{NanoJ-Core: Channel Registration}
-
+\section*{Dengue forecast models}
+\subsection*{LSTM}
 \noindent
-Channel registration is able to calculate and apply an elastic transform to realign different captured wavelengths.
+A LSTM model is a recurrent deep neural network model developed to handle 
+predictions of timeseries. We used a LSTM model with topology given in table 
+\ref{tab:lstm}. The model was trained for 300 epochs using a mean-log 
+squared-error (MLSE) loss function  and a Nesterov Adam 
+optimizer\cite{sutskever2013importance}. A look back of 4 weeks and a 
+forecasting window of 4 weeks were used.
 
 \begin{center}\vspace{1cm}
     \includegraphics[width=0.8\linewidth]{FigureChannelAlignment_v4.png}
     \captionof{figure}{\textbf{Multi-colour channel registration with NanoJ-Core.} \textbf{a)} Composite image of multi-colour beads, prior to (left) and after (right) channel registration using NanoJ-Core. Scale bars: 25 \textmu{}m, insets: 0.5 \textmu{}m. \textbf{b)} Vectorial representation of the shift between the two channels (left, displacement vector length 50 times larger for representation purposes), horizontal (middle) and vertical (right) shift maps obtained and applied to the data shown in a). Scale bars: 25 \textmu{}m.}
 \end{center}%\vspace{1cm}
 
-%----------------------------------------------------------------------------------------
-%	NanoJ-SRRF: Live-Cell Super-Resolution Imaging
-%----------------------------------------------------------------------------------------
-\section*{NanoJ-SRRF: Live-Cell Super-Resolution}
+\subsection*{Random Quantile Forest (RQF)}
+Random Forest models calculate an ensemble of regression trees from random 
+subsets of data. RQF model are an extension to regular random forests in which 
+the full conditional distribution of $Y$ given $X=x$ is calculated. As a 
+result, it is a non-parametric, consistent and accurate way to determine 
+conditional quantiles from high-dimensional predictors.
+\section*{Results}
 
 \noindent
-Super-Resolution Radial Fluctuations (SRRF) is able to generate a super-resolution reconstruction by analysing fluctuations in the emission of fluorophores captured in a short image sequence.
+Both models were fitted to available data yielding...
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.85\linewidth]{FigureSRRF_v6.png}
@@ -126,8 +156,8 @@ Super-Resolution Radial Fluctuations (SRRF) is able to generate a super-resoluti
 %----------------------------------------------------------------------------------------
 %	NanoJ-SQUIRREL: Estimating Image Quality & Resolution
 %----------------------------------------------------------------------------------------
-\section*{NanoJ-SQUIRREL: Estimating Image Quality \& Resolution}
-SQUIRREL quantitatively calculates local quality and resolution in super-resolution images. It highlights  limitations on the data collected and a reference point to help researchers improve imaging fidelity.
+\section*{Discussion}
+
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.85\linewidth]{FigureSQUIRREL_v3.png}
@@ -137,9 +167,9 @@ SQUIRREL quantitatively calculates local quality and resolution in super-resolut
 %----------------------------------------------------------------------------------------
 %	NanoJ-VirusMapper: Structural Mapping and Modelling
 %----------------------------------------------------------------------------------------
-\section*{NanoJ-VirusMapper: Structural Mapping and Modelling}
+\section*{Conclusion}
 
-VirusMapper features a single-particle analysis (SPA) algorithm, capable of generating structural models of conserved structures imaged by Super-Resolution Microscopy
+
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.7\linewidth]{Figure_VirusMapper.png}
@@ -149,9 +179,8 @@ VirusMapper features a single-particle analysis (SPA) algorithm, capable of gene
 %----------------------------------------------------------------------------------------
 %	NanoJ-Fluidics: Sample Liquid Exchange
 %----------------------------------------------------------------------------------------
-\section*{NanoJ-Fluidics: Liquid Exchange}
 
-NanoJ-Fluidics (Pumpy McPumpface) entails the control of a simple inexpensive LEGO-based syringe pump array that automates live-to-fixed imaging and sequential labelling of the sample. Protocols can be run automatically in parallel to the acquisition.
+
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=1\linewidth]{Pumpy_Figure1_NComm_Rev3_v6.png}
@@ -166,18 +195,7 @@ NanoJ-Fluidics (Pumpy McPumpface) entails the control of a simple inexpensive LE
 % \section*{Conclusions}
 % blabla
 
-%----------------------------------------------------------------------------------------
-%	Gender balance
-%----------------------------------------------------------------------------------------
 
-\section*{Author representation}
-\begin{minipage}{0.1\linewidth}% to keep image and caption on one page
-\makebox[\linewidth]{%        to center the image
-    \includegraphics[width=0.8\linewidth]{FigureGenderEquality.png}}\
-\end{minipage}
-\begin{minipage}{0.9\linewidth}% to keep image and caption on one page
-    I recognise a gender inequality in the author list (2F/8M). I am committed to achieve a better balanced representation of gender and minorities in our future work.  
-\end{minipage}
 
 
 %----------------------------------------------------------------------------------------
