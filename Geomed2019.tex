@@ -119,24 +119,22 @@ evaluate its performance in predicting the other two arboviroses.
 
 
 
-
-%----------------------------------------------------------------------------------------
-%	NanoJ-Core: Channel registration
-%----------------------------------------------------------------------------------------
 \section*{Dengue forecast models}
+Both LSTM and RQF models were trained to predict 4 weeks ahead of the last data 
+point. Both models use 4 weeks of historical data to generate 
+forecasts. 
 \subsection*{LSTM}
 \noindent
 A LSTM model is a recurrent deep neural network model developed to handle 
 predictions of timeseries. We used a LSTM model with 3 LSTM units followed by 
 3 dropout layers. The model was trained for 300 epochs using a mean-log 
 squared-error (MLSE) loss function  and a Nesterov Adam 
-optimizer\cite{sutskever2013importance}. A look back of 4 weeks and a 
-forecasting window of 4 weeks were used.
+optimizer\cite{sutskever2013importance}. 
 
 \begin{center}\vspace{1cm} 
     \includegraphics[width=\linewidth]{figures/LSTM_dropout.png}
     \captionof{figure}{\textbf{LSTM forecast for Dengue incidence (black line)} 
-Prediction (red line) with 95\% interval for dengue.}
+Prediction (red line) with 95\% interval for dengue. Every point in}
 \end{center}%\vspace{1cm}
 
 \subsection*{Random Quantile Forest (RQF)}
@@ -146,13 +144,21 @@ the full conditional distribution of $Y$ given $X=x$ is calculated. As a
 result, it is a non-parametric, consistent and accurate way to determine 
 conditional quantiles from high-dimensional 
 predictors\cite{meinshausen2006quantile}.
+\begin{center}\vspace{1cm}
+\includegraphics[width=0.9\linewidth]{figures/qf_Rio_de_Janeiro_dengue.png}
+\captionof{figure}{\textbf{Baseline forecast for dengue in Rio de Janeiro.} 
+Random quantile forest model trained on data from 2010 to mid 2016. Red line is 
+the median prediction, with 95\% intervals in light purple.}
+\end{center}%\vspace{1cm}
+
 \section*{Results}
 
 \noindent
-Both models were fitted to available Chickungunya and Zika data yielding...
+Both models were fitted to available Chickungunya and Zika data yielding 
+reasonable predictions. Below is the forecasts for Chikungunya.
 
 \begin{center}\vspace{1cm}
-\includegraphics[width=\linewidth]{figures/dcz_series.png}
+\includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Rio_de_Janeiro.png}
 \captionof{figure}{\textbf{Live-cell super-resolution microscopy with NanoJ-SRRF.} \textbf{a)} Comparison of widefield and SRRF reconstruction from UtrCH-GFP actin labelling. Scale bar: 5 \textmu{}m. \textbf{b)} Time-course of the inset shown in a), obtained at 33.3 Hz and displayed every 30 s. Scale bar: 1 \textmu{}m. \textbf{c)} Colour-coded time course. Scale bar: 1 \textmu{}m.}
 \end{center}%\vspace{1cm}
 
