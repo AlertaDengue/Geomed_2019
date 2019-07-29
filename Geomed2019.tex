@@ -36,7 +36,8 @@
 % The widths of these boxes can be easily edited to accommodate your content as you see fit
 
 \begin{minipage}[b]{0.75\linewidth}
-\VeryHuge \color{NavyBlue} \textbf{Evaluating dengue forecasting model to predict Zika and Chikungunya in Brasil.}
+\VeryHuge \color{NavyBlue} \textbf{Evaluating dengue forecasting models to 
+predict Zika and Chikungunya in Brazil.}
 \color{Black}\\[0.4cm] 
 \Large \textbf{
 \authorName{Flávio Codeço Coelho}{1\space\Letter}, 
@@ -126,8 +127,8 @@ evaluate its performance in predicting the other two arboviroses.
 \subsection*{LSTM}
 \noindent
 A LSTM model is a recurrent deep neural network model developed to handle 
-predictions of timeseries. We used a LSTM model with topology given in table 
-\ref{tab:lstm}. The model was trained for 300 epochs using a mean-log 
+predictions of timeseries. We used a LSTM model with 3 LSTM units followed by 
+3 dropout layers. The model was trained for 300 epochs using a mean-log 
 squared-error (MLSE) loss function  and a Nesterov Adam 
 optimizer\cite{sutskever2013importance}. A look back of 4 weeks and a 
 forecasting window of 4 weeks were used.
@@ -142,7 +143,8 @@ Random Forest models calculate an ensemble of regression trees from random
 subsets of data. RQF model are an extension to regular random forests in which 
 the full conditional distribution of $Y$ given $X=x$ is calculated. As a 
 result, it is a non-parametric, consistent and accurate way to determine 
-conditional quantiles from high-dimensional predictors.
+conditional quantiles from high-dimensional 
+predictors\cite{meinshausen2006quantile}.
 \section*{Results}
 
 \noindent
