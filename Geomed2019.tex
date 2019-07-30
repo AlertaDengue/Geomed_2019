@@ -75,7 +75,11 @@ github.com/AlertaDengue | \faTwitter \ @fccoelho}
 %----------------------------------------------------------------------------------------
 
 \noindent
-The Mosquito Aedes aegypti is a vector for multiple viruses around the globe. Its distribution is restricted to tropical and subtropical climates, which reflects its sensitivity to temperature, humidity and other weather constraints. The modulation of its life cicle by climate, shapes the seasonality of the diseases it transmits.
+The Mosquito Aedes aegypti is a vector for multiple viruses around the globe. 
+Its distribution is restricted to tropical and subtropical climates, which 
+reflects its sensitivity to temperature, humidity and other weather constraints. 
+The modulation of its life cicle by climate, shapes the seasonality of the 
+diseases it transmits. 
  In Brazil, Aedes aegypti has been mainly associated with the transmission of 
 dengue, making it a marked seasonal disease. In recent years, A. aegypti has 
 also been notably responsible for epidemics of the Zika and Chikungunya virus. 
@@ -102,9 +106,7 @@ The data used in this work comes from the Infodengue project, which monitors
 these arboviroses in Brazil. In the figure \ref{fig:series} we can see the 
 incidence series for states in Brazil which had significant outbreaks of the 3 
 arboviroses since 2016 when Chikungunya and Zika arrived in Brazil.
-%----------------------------------------------------------------------------------------
-%	NanoJ-Core: Drift Correction
-%----------------------------------------------------------------------------------------
+
 \section*{Three diseases, one vector.}
 
 \noindent
@@ -117,14 +119,13 @@ dynamics is to predict other arboviroses, in this case Zika and Chikungunya.
 Here we will revisit a forecast model developed by the authors for dengue, and 
 evaluate its performance in predicting the other two arboviroses.
 
-
-
 \section*{Dengue forecast models}
 Both LSTM and RQF models were trained to predict 4 weeks ahead of the last data 
-point. Both models use 4 weeks of historical data to generate 
-forecasts. 
-\subsection*{LSTM}
-\noindent
+point($w_{t+4}$). Both models use 4 weeks of historical data to generate 
+forecasts. Forecasts are done in a rolling window fashion. Both models use as 
+predictors, the following series: number of cases, Effective reproduction 
+number ($R_t$),Temperature, Humidity and Atmospheric presure.
+\paragraph*{LSTM.}
 A LSTM model is a recurrent deep neural network model developed to handle 
 predictions of timeseries. We used a LSTM model with 3 LSTM units followed by 
 3 dropout layers. The model was trained for 300 epochs using a mean-log 
@@ -137,13 +138,20 @@ optimizer\cite{sutskever2013importance}.
 Prediction (red line) with 95\% interval for dengue. Every point in}
 \end{center}%\vspace{1cm}
 
-\subsection*{Random Quantile Forest (RQF)}
+\paragraph*{Random Quantile Forest (RQF).}
 Random Forest models calculate an ensemble of regression trees from random 
-subsets of data. RQF model are an extension to regular random forests in which 
+subsets of data. RQF models are an extension to regular random forests in which 
 the full conditional distribution of $Y$ given $X=x$ is calculated. As a 
 result, it is a non-parametric, consistent and accurate way to determine 
 conditional quantiles from high-dimensional 
-predictors\cite{meinshausen2006quantile}.
+predictors\cite{meinshausen2006quantile}. Let $T$ be an array containing the 
+${\mathcal D=4}$ most recent observations from each 
+series in the predictor matrix $X$.
+\begin{equation}
+\hat{y}_{t+\tau} = \beta_{t} T_{t} + \epsilon_t
+\label{eq:rf_trans}
+\end{equation} 
+
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.9\linewidth]{figures/qf_Rio_de_Janeiro_dengue.png}
 \captionof{figure}{\textbf{Baseline forecast for dengue in Rio de Janeiro.} 
@@ -154,19 +162,35 @@ the median prediction, with 95\% intervals in light purple.}
 \section*{Results}
 
 \noindent
-Both models were fitted to available Chickungunya and Zika data yielding 
-reasonable predictions. Below is the forecasts for Chikungunya.
+Both models were fed available Chickungunya and Zika data, yielding 
+reasonable predictions. Below are the forecasts for Chikungunya for the cities 
+of Rio de Janeiro and Fortaleza.
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Rio_de_Janeiro.png} 
-\captionof{figure}{\textbf{Live-cell super-resolution microscopy with NanoJ-SRRF.} \textbf{a)} Comparison of widefield and SRRF reconstruction from UtrCH-GFP actin labelling. Scale bar: 5 \textmu{}m. \textbf{b)} Time-course of the inset shown in a), obtained at 33.3 Hz and displayed every 30 s. Scale bar: 1 \textmu{}m. \textbf{c)} Colour-coded time course. Scale bar: 1 \textmu{}m.}
+\captionof{figure}{\textbf{Chikungunya forecasts based on dengue RQF model.} 
+The 95\% confidence intervals are wider than those for dengue data, but include 
+the observed data.}
 \end{center}%\vspace{1cm}
+
+\begin{center}\vspace{1cm}
+\includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Fortaleza.png} 
+\captionof{figure}{\textbf{Chikungunya forecasts based on dengue RQF model.} 
+The 95\% confidence intervals are wider than those for dengue data, but include 
+the observed data.}
+\end{center}%\vspace{1cm}
+
+Predictions where run from 2016 on since before this date Chikungunya and Zika 
+did not circulate in Brazil.
 
 %----------------------------------------------------------------------------------------
 %	NanoJ-SQUIRREL: Estimating Image Quality & Resolution
 %----------------------------------------------------------------------------------------
 \section*{Discussion}
-
+Cross-disease forecasting models like the ones presented here are important 
+because they allow us to take advantage from longer historic records from other 
+diseases which share similar transmission mechanisms and environmental 
+determinants.
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=\linewidth]{figures/dcz_series.png}
