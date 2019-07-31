@@ -23,6 +23,7 @@
 % \usepackage[labelformat=empty]{caption}
 \usepackage{fontawesome}
 \usepackage[utf8]{inputenc}
+\usepackage{url}
 
 \begin{document}
 
@@ -190,9 +191,12 @@ the observed data.}\label{fig:chik_fortaleza}
 Predictions where run from 2016 on since before this year Chikungunya and Zika 
 did not circulate in Brazil. 
 
-%----------------------------------------------------------------------------------------
-%	NanoJ-SQUIRREL: Estimating Image Quality & Resolution
-%----------------------------------------------------------------------------------------
+\begin{center}\vspace{1cm}
+\includegraphics[width=1\linewidth]{figures/qf_zika_cross_Fortaleza}
+\captionof{figure}{\textbf{Cross-predicting for Zika.} Zika forecasts based on 
+dengue RQF, for the city of Fortaleza.}\label{fig:zika_fortaleza}
+\end{center}%\vspace{1cm}
+
 \section*{Discussion}
 Cross-disease forecasting models like the ones presented here are important 
 because they allow us to take advantage from longer historic records from other 
@@ -204,24 +208,26 @@ cross-predictions when compared to forecasting the disease they were trained
 on. Nevertheless the models show reasonable accuracy when cross-predicting 
 Chikungunya (figures \ref{fig:chik_rio_de_janeiro} and 
 \ref{fig:chik_fortaleza}), perhaps more than the same models would be capable of 
-if they were trained to scarce available data for Chikungunya.
+if they were trained on the scarce available data for Chikungunya.
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=\linewidth]{figures/dcz_series.png}
-\captionof{figure}{\textbf{Quality and resolution assessment with NanoJ-SQUIRREL.} \textbf{a)} A super-resolution rendering and acquired widefield image of fixed Alexa647 labelled microtubules. \textbf{b)} Left: SQUIRREL error map highlighting discrepancies between the super-resolution and diffraction-limited images in (a). Right: Magnified insets at indicated positions on error map. \textbf{c)} Left: SQUIRREL resolution map of the super-resolution image in (a). Right: Magnified insets for indicated resolution blocks. Whole image scale bars = 5 \textmu{}m, inset scale bars = 1 \textmu{}m.}
-\end{center}%\vspace{1cm}
+For Zika, cross-predictions did not work as well (figure 
+\ref{fig:zika_fortaleza}). Perhaps the fact that Zika can also be transmitted 
+sexually\cite{coelho2016higher} makes its dynamic sufficiently different from 
+dengue to make cross-predicting ineffective.
 
-%----------------------------------------------------------------------------------------
-%	NanoJ-VirusMapper: Structural Mapping and Modelling
-%----------------------------------------------------------------------------------------
 \section*{Conclusion}
 
+Machine learning models have shown great potential for infectious disease 
+forecasting. However, long enough timeseries, essential to train such models 
+are not easy to come by. In this work we have shown the potential of 
+cross-disease forecasts, for diseases with similar transmission mechanisms. 
+Despite the encouraging initial results there is still plenty of room for 
+improvements of such models. 
+
+Supplementary figures with results for many other brazilian cities are 
+available from this github repository: \url{github.com/AlertaDengue/Geomed_2019}
 
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=\linewidth]{figures/dcz_series.png}
-\captionof{figure}{\textbf{Quantitative SPA-based modelling.} Multicomponent model of the Vaccinia virus by imaging in super-resolution hundreds of fluorescently labelled viruses and modelling their structure through VirusMapper}
-\end{center}%\vspace{1cm}
 
 %----------------------------------------------------------------------------------------
 %	NanoJ-Fluidics: Sample Liquid Exchange
@@ -229,10 +235,7 @@ if they were trained to scarce available data for Chikungunya.
 
 
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=1\linewidth]{figures/dcz_series.png}
-\captionof{figure}{\textbf{Schematics of the NanoJ-Fluidics system.} \textbf{a)} 3D side view of a single syringe pump. \textbf{b)} 2D top view of a syringe pump array (representing 4 pumps out of 128 maximum) and a fluid extraction peristaltic pump, both controlled by an Arduino UNO. \textbf{c)} Example of possible workflows}
-\end{center}%\vspace{1cm}
+
 
 
 % %----------------------------------------------------------------------------------------
@@ -260,7 +263,7 @@ if they were trained to scarce available data for Chikungunya.
 %----------------------------------------------------------------------------------------
 \section*{Funded by}
 \begin{center}\vspace{0cm}
-\includegraphics[width=0.95\linewidth]{figures/dcz_series.png}
+\includegraphics[width=0.65\linewidth]{figures/fundedby.png}
 \end{center}%\vspace{1cm}
 
 %----------------------------------------------------------------------------------------
