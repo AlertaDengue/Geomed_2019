@@ -103,7 +103,7 @@ The three arboviroses incidences are correlated.}
 \end{center}%\vspace{1cm}
 
 The data used in this work comes from the Infodengue project, which monitors 
-these arboviroses in Brazil. In the figure \ref{fig:series} we can see the 
+these arboviroses in Brazil. In figure \ref{fig:series} we can see the 
 incidence series for states in Brazil which had significant outbreaks of the 3 
 arboviroses since 2016 when Chikungunya and Zika arrived in Brazil.
 
@@ -124,18 +124,20 @@ Both LSTM and RQF models were trained to predict 4 weeks ahead of the last data
 point($w_{t+4}$). Both models use 4 weeks of historical data to generate 
 forecasts. Forecasts are done in a rolling window fashion. Both models use as 
 predictors, the following series: number of cases, Effective reproduction 
-number ($R_t$),Temperature, Humidity and Atmospheric presure.
+number ($R_t$),Temperature, Humidity and Atmospheric pressure.
 \paragraph*{LSTM.}
 A LSTM model is a recurrent deep neural network model developed to handle 
 predictions of timeseries. We used a LSTM model with 3 LSTM units followed by 
 3 dropout layers. The model was trained for 300 epochs using a mean-log 
 squared-error (MLSE) loss function  and a Nesterov Adam 
-optimizer\cite{sutskever2013importance}. 
+optimizer\cite{sutskever2013importance}. Figure \ref{fig:dengue_LSTM} shows 
+dengue forecasts by the LSTM model for Fortaleza.
 
 \begin{center}\vspace{1cm} 
     \includegraphics[width=\linewidth]{figures/LSTM_dropout.png}
     \captionof{figure}{\textbf{LSTM forecast for Dengue incidence (black line)} 
-Prediction (red line) with 95\% interval for dengue. Every point in}
+Prediction (red line) with 95\% interval for dengue. Every point in the red 
+line corresponds to prediction from 4 weeks before.}\label{fig:dengue_LSTM}
 \end{center}%\vspace{1cm}
 
 \paragraph*{Random Quantile Forest (RQF).}
@@ -146,17 +148,22 @@ result, it is a non-parametric, consistent and accurate way to determine
 conditional quantiles from high-dimensional 
 predictors\cite{meinshausen2006quantile}. Let $T$ be an array containing the 
 ${\mathcal D=4}$ most recent observations from each 
-series in the predictor matrix $X$.
+series in the predictor matrix. Thus the regression model can be simply 
+represented by
 \begin{equation}
 \hat{y}_{t+\tau} = \beta_{t} T_{t} + \epsilon_t
 \label{eq:rf_trans}
 \end{equation} 
 
+Figure \ref{fig:dengue_RQF} shows dengue forecasts for Rio de Janeiro by the 
+RQF model.
+
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.9\linewidth]{figures/qf_Rio_de_Janeiro_dengue.png}
 \captionof{figure}{\textbf{Baseline forecast for dengue in Rio de Janeiro.} 
 Random quantile forest model trained on data from 2010 to mid 2016. Red line is 
-the median prediction, with 95\% intervals in light purple.}
+the median prediction, with 95\% intervals in light 
+purple.}\label{fig:dengue_RQF}
 \end{center}%\vspace{1cm}
 
 \section*{Results}
@@ -170,18 +177,18 @@ of Rio de Janeiro and Fortaleza.
 \includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Rio_de_Janeiro.png} 
 \captionof{figure}{\textbf{Chikungunya forecasts based on dengue RQF model.} 
 The 95\% confidence intervals are wider than those for dengue data, but include 
-the observed data.}
+the observed data.}\label{fig:chik_rio_de_janeiro}
 \end{center}%\vspace{1cm}
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Fortaleza.png} 
 \captionof{figure}{\textbf{Chikungunya forecasts based on dengue RQF model.} 
 The 95\% confidence intervals are wider than those for dengue data, but include 
-the observed data.}
+the observed data.}\label{fig:chik_fortaleza}
 \end{center}%\vspace{1cm}
 
-Predictions where run from 2016 on since before this date Chikungunya and Zika 
-did not circulate in Brazil.
+Predictions where run from 2016 on since before this year Chikungunya and Zika 
+did not circulate in Brazil. 
 
 %----------------------------------------------------------------------------------------
 %	NanoJ-SQUIRREL: Estimating Image Quality & Resolution
@@ -191,6 +198,13 @@ Cross-disease forecasting models like the ones presented here are important
 because they allow us to take advantage from longer historic records from other 
 diseases which share similar transmission mechanisms and environmental 
 determinants.
+
+The results presented here, expectedly show more uncertainty associated to 
+cross-predictions when compared to forecasting the disease they were trained 
+on. Nevertheless the models show reasonable accuracy when cross-predicting 
+Chikungunya (figures \ref{fig:chik_rio_de_janeiro} and 
+\ref{fig:chik_fortaleza}), perhaps more than the same models would be capable of 
+if they were trained to scarce available data for Chikungunya.
 
 \begin{center}\vspace{1cm}
 \includegraphics[width=\linewidth]{figures/dcz_series.png}

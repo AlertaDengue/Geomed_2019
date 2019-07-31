@@ -1,0 +1,11 @@
+*.py[cod]
+*.so
+*.cfg
+!setup.cfg
+*.orig
+*.log
+*.pot
+__pycache__/*
+.cache/*
+
+.ipynb_checkpoints/
