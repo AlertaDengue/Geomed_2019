@@ -161,7 +161,7 @@ def train(model, X_train, Y_train, batch_size=1, epochs=10, geocode=None, overwr
     )
     es = EarlyStopping(patience=15)
     filepath = "trained_{}_model.h5".format(geocode)
-    cp = ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1)
+    cp = ModelCheckpoint("trained_{}_model.h5".format(geocode), monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1)
 
     hist = model.fit(
         X_train,
