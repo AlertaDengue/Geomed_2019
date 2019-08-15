@@ -26,7 +26,8 @@
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{geometry}
-
+\addtolength{\textwidth}{20cm}
+\geometry{margin=5cm, rmargin=5cm, marginparwidth=0cm}
 \begin{document}
 
 %----------------------------------------------------------------------------------------
@@ -98,7 +99,7 @@ present results of the forecast of total incidence of arboviral disease as well
 as of each disease separately and discuss the relative performances of the model 
 for each of these tasks.
 
-\begin{center}\vspace{1cm}
+\begin{center}
 \includegraphics[width=\linewidth]{figures/dcz_series.png}
 \captionof{figure}{\textbf{Weekly incidence for the state of Ceará, Brazil.} 
 The three arboviroses incidences are correlated.}
@@ -110,17 +111,6 @@ these arboviroses in Brazil. In figure \ref{fig:series} we can see the
 incidence series for states in Brazil which had significant outbreaks of the 3 
 arboviroses since 2016 when Chikungunya and Zika arrived in Brazil.
 
-\section*{Three diseases, one vector.}
-
-\noindent
-Given their similar transmission mechanisms, these diseases present similar 
-seasonal patterns. Being seasonal diseases with serious consequences, being 
-able to forecast their incidence is very important for public health 
-authorities. Among these, Dengue is the one with the longest historic records. 
-Therefore its worth investigating how usefull our knowledge about dengue 
-dynamics is to predict other arboviroses, in this case Zika and Chikungunya. 
-Here we will revisit a forecast model developed by the authors for dengue, and 
-evaluate its performance in predicting the other two arboviroses.
 
 \section*{Dengue forecast models}
 Both LSTM and RQF models were trained to predict 4 weeks ahead of the last data 
@@ -136,10 +126,11 @@ squared-error (MLSE) loss function  and a Nesterov Adam
 optimizer\cite{sutskever2013importance}. Figure \ref{fig:dengue_LSTM} shows 
 dengue forecasts by the LSTM model for Fortaleza.
 
-\begin{center}\vspace{1cm} 
-    \includegraphics[width=\linewidth]{figures/LSTM_dropout.png}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{figures/lstm_Fortaleza_unc.png}
     \captionof{figure}{\textbf{LSTM forecast for Dengue incidence (black line)} 
-Prediction (red line) with 95\% interval for dengue. Every point in the red 
+Prediction (red line) with 95\% interval for the city of Fortaleza. Every point 
+in the red 
 line corresponds to prediction from 4 weeks before.}\label{fig:dengue_LSTM}
 \end{center}%\vspace{1cm}
 
@@ -161,8 +152,8 @@ represented by
 Figure \ref{fig:dengue_RQF} shows dengue forecasts for Rio de Janeiro by the 
 RQF model.
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=0.9\linewidth]{figures/qf_Rio_de_Janeiro_dengue.png}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/qf_Rio_de_Janeiro_dengue.png}
 \captionof{figure}{\textbf{Baseline forecast for dengue in Rio de Janeiro.} 
 Random quantile forest model trained on data from 2010 to mid 2016. Red line is 
 the median prediction, with 95\% intervals in light 
@@ -170,21 +161,21 @@ purple.}\label{fig:dengue_RQF}
 \end{center}%\vspace{1cm}
 
 \section*{Results}
-
 \noindent
 Both models were fed available Chickungunya and Zika data, yielding 
 reasonable predictions. Below are the forecasts for Chikungunya for the cities 
 of Rio de Janeiro and Fortaleza.
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Rio_de_Janeiro.png} 
+\subsection*{RQF cross-predictions}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/qf_chik_cross_Rio_de_Janeiro.png} 
 \captionof{figure}{\textbf{Chikungunya forecasts based on dengue RQF model.} 
 The 95\% confidence intervals are wider than those for dengue data, but include 
 the observed data.}\label{fig:chik_rio_de_janeiro}
 \end{center}%\vspace{1cm}
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=0.9\linewidth]{figures/qf_chik_cross_Fortaleza.png} 
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/qf_chik_cross_Fortaleza.png} 
 \captionof{figure}{\textbf{Chikungunya forecasts based on dengue RQF model.} 
 The 95\% confidence intervals are wider than those for dengue data, but include 
 the observed data.}\label{fig:chik_fortaleza}
@@ -193,31 +184,52 @@ the observed data.}\label{fig:chik_fortaleza}
 Predictions where run from 2016 on since before this year Chikungunya and Zika 
 did not circulate in Brazil. 
 
-\begin{center}\vspace{1cm}
-\includegraphics[width=1\linewidth]{figures/qf_zika_cross_Fortaleza}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/qf_zika_cross_Fortaleza}
 \captionof{figure}{\textbf{Cross-predicting for Zika.} Zika forecasts based on 
 dengue RQF, for the city of Fortaleza.}\label{fig:zika_fortaleza}
+\end{center}
+
+\subsection*{LSTM cross-predictions}
+
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/lstm_chik_cross_Fortaleza.png} 
+\captionof{figure}{\textbf{Chikungunya forecasts based on dengue LSTM model.} 
+The 95\% confidence intervals are wider than those for dengue data, but include 
+the observed data.}\label{fig:lstm_chik_fortaleza}
 \end{center}%\vspace{1cm}
 
+\begin{center}
+\includegraphics[width=0.8\linewidth]{figures/lstm_zika_cross_Fortaleza.png} 
+\captionof{figure}{\textbf{Chikungunya forecasts based on dengue LSTM model.} 
+The 95\% confidence intervals are wider than those for dengue data, but include 
+the observed data.}\label{fig:lstm_chik_fortaleza}
+\end{center}%\vspace{1cm}
+
+
+
 \section*{Discussion}
+
+
+\section*{Discussion and Conclusion}
 Cross-disease forecasting models like the ones presented here are important 
 because they allow us to take advantage from longer historic records from other 
 diseases which share similar transmission mechanisms and environmental 
 determinants.
 
+
 The results presented here, expectedly show more uncertainty associated to 
 cross-predictions when compared to forecasting the disease they were trained 
 on. Nevertheless the models show reasonable accuracy when cross-predicting 
 Chikungunya (figures \ref{fig:chik_rio_de_janeiro} and 
-\ref{fig:chik_fortaleza}), perhaps more than the same models would be capable of 
-if they were trained on the scarce available data for Chikungunya.
+\ref{fig:chik_fortaleza}), perhaps more than the same models would be capable 
+of 
+if they were trained on the scarce available data for Chikungunya. 
 
 For Zika, cross-predictions did not work as well (figure 
 \ref{fig:zika_fortaleza}). Perhaps the fact that Zika can also be transmitted 
 sexually\cite{coelho2016higher} makes its dynamic sufficiently different from 
 dengue to make cross-predicting ineffective.
-
-\section*{Conclusion}
 
 Machine learning models have shown great potential for infectious disease 
 forecasting. However, long enough timeseries, essential to train such models 
@@ -228,27 +240,6 @@ improvements of such models.
 
 Supplementary figures with results for many other brazilian cities are 
 available from this github repository: \url{github.com/AlertaDengue/Geomed_2019}
-
-
-
-%----------------------------------------------------------------------------------------
-%	NanoJ-Fluidics: Sample Liquid Exchange
-%----------------------------------------------------------------------------------------
-
-
-
-
-
-
-% %----------------------------------------------------------------------------------------
-% %	CONCLUSIONS
-% %----------------------------------------------------------------------------------------
-
-% \section*{Conclusions}
-% blabla
-
-
-
 
 %----------------------------------------------------------------------------------------
 %	References
