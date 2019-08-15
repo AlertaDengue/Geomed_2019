@@ -195,20 +195,14 @@ dengue RQF, for the city of Fortaleza.}\label{fig:zika_fortaleza}
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/lstm_chik_cross_Fortaleza.png} 
 \captionof{figure}{\textbf{Chikungunya forecasts based on dengue LSTM model.} 
-The 95\% confidence intervals are wider than those for dengue data, but include 
-the observed data.}\label{fig:lstm_chik_fortaleza}
+City of Fortaleza.}\label{fig:lstm_chik_fortaleza}
 \end{center}%\vspace{1cm}
 
 \begin{center}
 \includegraphics[width=0.8\linewidth]{figures/lstm_zika_cross_Fortaleza.png} 
-\captionof{figure}{\textbf{Chikungunya forecasts based on dengue LSTM model.} 
-The 95\% confidence intervals are wider than those for dengue data, but include 
-the observed data.}\label{fig:lstm_chik_fortaleza}
+\captionof{figure}{\textbf{Zika forecasts based on dengue LSTM model.}City of 
+Fortaleza.}\label{fig:lstm_zika_fortaleza}
 \end{center}%\vspace{1cm}
-
-
-
-\section*{Discussion}
 
 
 \section*{Discussion and Conclusion}
@@ -217,19 +211,21 @@ because they allow us to take advantage from longer historic records from other
 diseases which share similar transmission mechanisms and environmental 
 determinants.
 
-
 The results presented here, expectedly show more uncertainty associated to 
 cross-predictions when compared to forecasting the disease they were trained 
 on. Nevertheless the models show reasonable accuracy when cross-predicting 
 Chikungunya (figures \ref{fig:chik_rio_de_janeiro} and 
 \ref{fig:chik_fortaleza}), perhaps more than the same models would be capable 
-of 
-if they were trained on the scarce available data for Chikungunya. 
+of if they were trained on the scarce available data for Chikungunya. 
 
-For Zika, cross-predictions did not work as well (figure 
+For Zika, cross-predictions based of the RQF model did not work as well (figure 
 \ref{fig:zika_fortaleza}). Perhaps the fact that Zika can also be transmitted 
 sexually\cite{coelho2016higher} makes its dynamic sufficiently different from 
-dengue to make cross-predicting ineffective.
+dengue to make cross-predicting ineffective. The LSTM model showed similar 
+performance when compared to RQF for Chikungunia (fig. 
+\ref{fig:lstm_chik_fortaleza}). But for Zika (fig. 
+\ref{fig:lstm_zika_fortaleza}) the LSTM model performed much better than RQF 
+for cross predictions.
 
 Machine learning models have shown great potential for infectious disease 
 forecasting. However, long enough timeseries, essential to train such models 
